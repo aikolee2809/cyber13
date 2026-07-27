@@ -643,30 +643,6 @@ function CrewFXStyles() {
 }
 
 /* ── Synchronized crew glitch (hover) ── */
-@keyframes crewCardShake {
-  0% { transform: translate(0,0); }
-  8% { transform: translate(-2.5px, 1.5px); }
-  16% { transform: translate(2.5px, -2px); }
-  24% { transform: translate(-2px, -2.5px); }
-  32% { transform: translate(2px, 2.5px); }
-  40% { transform: translate(-1.5px, 2px); }
-  50% { transform: translate(1.5px, -1.5px); }
-  60% { transform: translate(-1px, 1px); }
-  70% { transform: translate(1px, -0.5px); }
-  80% { transform: translate(-0.5px, 0.5px); }
-  100% { transform: translate(0,0); }
-}
-@keyframes crewNameShake {
-  0% { transform: translate(0,0); }
-  10% { transform: translate(-2px, 0.5px); }
-  20% { transform: translate(2px, -1px); }
-  30% { transform: translate(-1.5px, -1px); }
-  40% { transform: translate(1.5px, 1px); }
-  50% { transform: translate(-1px, 0.5px); }
-  60% { transform: translate(1px, -0.5px); }
-  70% { transform: translate(-0.5px, 0); }
-  100% { transform: translate(0,0); }
-}
 @keyframes crewWellGlitch {
   0%,100% { filter: none; }
   10% { filter: drop-shadow(2px 0 rgba(255,0,60,0.55)) drop-shadow(-2px 0 rgba(0,240,255,0.55)); }
