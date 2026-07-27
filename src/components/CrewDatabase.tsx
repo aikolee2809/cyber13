@@ -382,7 +382,7 @@ function useCrewEngine(
         const scene = scenes[i];
         if (!scene) continue;
 
-        const z = -(i + 1) * SPACING + offset;
+    const z = -START_Z - i * SPACING + offset;
         const op = depthOpacity(z);
 
         // Only transform + opacity — no layout recalculation.
