@@ -48,7 +48,7 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative overflow-hidden bg-cyber-darker px-6 pt-32 pb-16 sm:pt-40 sm:pb-20"
+      className="relative overflow-hidden bg-cyber-darker px-6 pt-32 pb-16 sm:pt-40 sm:pb-12"
     >
       {/* faint horizon glow */}
       <div className="pointer-events-none absolute inset-0 -z-10">
