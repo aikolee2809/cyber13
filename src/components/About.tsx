@@ -100,7 +100,7 @@ export default function About() {
           <div className="reveal-right relative" style={{ transitionDelay: '200ms' }}>
             <div
               ref={imgRef}
-              className="relative aspect-[3/4] w-[120%] overflow-hidden"
+              className="relative aspect-[3/4] overflow-hidden"
               style={{ transform: `translateY(${offset}px)` }}
             >
               <video
