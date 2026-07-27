@@ -181,7 +181,7 @@ transform: `translateZ(${-START_Z - index * SPACING}px)`,
 <span
   className="font-mono text-[9px] tracking-[0.3em]"
   style={{
-    color: '#4d0202',
+    color: '#eb0909',
     textShadow: '0 0 4px rgba(0,240,255,.35)',
   }}
 >
