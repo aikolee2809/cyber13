@@ -446,7 +446,7 @@ function MissionModule({ step, index, last }: { step: typeof STEPS[number]; inde
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[9px] tracking-[0.3em] text-cyber-cyan/70">STEP {step.n}</span>
+              <span className="font-mono text-[12px] font-medium tracking-[0.18em] text-cyan-200">STEP {step.n}</span>
               <span className="mf-blink" />
             </div>
             <h3 className="mt-1 font-display text-base font-bold tracking-wide text-cyber-yellow" style={{ textShadow: '0 0 8px rgba(255,230,0,0.4)' }}>

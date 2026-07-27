@@ -160,7 +160,7 @@ transform: `translateZ(${-START_Z - index * SPACING}px)`,
         />
         <p
           ref={(el) => refs.text(0, el)}
-          className="font-mono text-[11px] tracking-[0.5em] text-cyan-500"
+          className="font-mono text-[13px] md:text-[14px] font-semibold tracking-[0.42em] text-cyan-300"
           style={{ opacity: 0, willChange: 'transform, opacity' }}
         >
           {member.file}
@@ -168,36 +168,38 @@ transform: `translateZ(${-START_Z - index * SPACING}px)`,
       </div>
       <p
         ref={(el) => refs.text(1, el)}
-        className="crew-codename mt-5 font-mono text-xs uppercase tracking-[0.42em]"
+        className="crew-codename mt-5 font-mono text-[16px] font-semibold uppercase tracking-[0.22em]"
         style={{ opacity: 0, willChange: 'transform, opacity' }}
       >
         {member.codename}
       </p>
       <div
-        ref={(el) => refs.text(3, el)}
-        className={`mt-3 flex flex-col ${align}`}
-        style={{ opacity: 0, willChange: 'transform, opacity' }}
-      >
-<span
-  className="font-mono text-[9px] tracking-[0.3em]"
-  style={{
-    color: '#eb0909',
-    textShadow: '0 0 4px rgba(0,240,255,.35)',
-  }}
+  ref={(el) => refs.text(3, el)}
+  className={`mt-3 flex flex-col ${align}`}
+  style={{ opacity: 0, willChange: 'transform, opacity' }}
 >
-  {member.meta[0]}
-</span>
-        <span
-  className="crew-cursor mt-1 font-mono text-[9px] tracking-[0.3em]"
-  style={{
-    color: '#FFE86A',
-    textShadow: '0 0 5px rgba(255,230,0,.35)',
-  }}
->
-  {member.meta[1]}
-</span>
-        <div className="crew-divider mt-4 w-32" />
-      </div>
+  <span
+    className="font-mono text-[11px] tracking-[0.25em]"
+    style={{
+      color: '#FFE86A',
+      textShadow: '0 0 5px rgba(255,230,0,.35)',
+    }}
+  >
+    {member.meta[0]}
+  </span>
+
+  <span
+    className="crew-cursor mt-1 font-mono text-[11px] tracking-[0.25em]"
+    style={{
+      color: '#FFE86A',
+      textShadow: '0 0 5px rgba(255,230,0,.35)',
+    }}
+  >
+    {member.meta[1]}
+  </span>
+
+  <div className="crew-divider mt-4 w-32" />
+</div>
       <h3
         ref={(el) => { nameElRef.current = el; refs.text(2, el); }}
         data-final-name={member.name}
