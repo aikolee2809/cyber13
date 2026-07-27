@@ -103,13 +103,21 @@ export default function About() {
               className="relative aspect-[3/4] overflow-hidden"
               style={{ transform: `translateY(${offset}px)` }}
             >
-              <img
-                src="https://ik.imagekit.io/zznoau6lx/ki34g7cl98ca1.jpg"
-                alt="A resident of Night City bathed in neon"
-                className="h-full w-full object-cover"
-                style={{ filter: 'contrast(1.1) saturate(1.15) brightness(0.78)' }}
-                loading="lazy"
-              />
+              <video
+  autoPlay
+  muted
+  loop
+  playsInline
+  className="h-full w-full object-cover"
+  style={{
+    filter: 'contrast(1.1) saturate(1.15) brightness(0.78)',
+  }}
+>
+  <source
+    src="https://streamable.com/32bee0"
+    type="video/mp4"
+  />
+</video>
               {/* cinematic grade */}
               <div className="absolute inset-0 bg-gradient-to-t from-cyber-darker via-transparent to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-r from-cyber-darker/40 via-transparent to-cyber-magenta/10" />
