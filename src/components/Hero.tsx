@@ -57,7 +57,9 @@ export default function Hero() {
       <div className="mx-auto max-w-5xl text-center">
         {/* Warning badge — reveals with the logo block at 2.7s */}
         <div
-          className="mb-8 inline-flex items-center gap-2 border border-cyber-yellow/50 bg-cyber-yellow/10 px-4 py-1.5 font-mono text-[11px] tracking-widest text-cyber-yellow animate-flicker backdrop-blur-sm"
+         className={`mb-8 inline-flex items-center gap-2 border border-cyber-yellow/50 bg-cyber-yellow/10 px-4 py-1.5 font-mono text-[11px] tracking-widest text-cyber-yellow backdrop-blur-sm ${
+  showLogo ? "animate-flicker" : ""
+}`}
           style={{
             opacity: showLogo ? 1 : 0,
             transform: showLogo ? 'translateY(0)' : 'translateY(24px)',
