@@ -114,7 +114,7 @@ export default function About() {
   }}
 >
   <source
-    src="https://streamable.com/32bee0"
+    src="https://cdn-cf-east.streamable.com/video/mp4/32bee0.mp4?Expires=1785387910717&Key-Pair-Id=APKAIEYUVEN4EVB2OKEQ&Signature=b4orH4PDMk-fyfC1Xk5IPw7KxEy1jfW-FN5ML25RyQtOcVgAvnUOR~lPuCHpHPWtaav82hixR1dJBW~0weJf6FwacfGyc8OcAVQcdPZxlM9EjB6o5nlkrpfnLx8JQT4rXuif93O2UNlOl9SIUguYQZbN~zSta8LIvGeJukQaev1z8XJYou8JyBPnyUTscxH1Zz1x5kSGnNgo1~NPOpV0K0zy0Fk3siXmbmTOn3MaWl80bFEQWLDKl5D6E1f6LCqz054jBJKgw9dxRLiMSe7rrJTC5-OReTv~tR4QbGEpkcPw9C2992l1WmZLgP5cCkt2Hs1iIjAV7YFhM3hUSWWxig__"
     type="video/mp4"
   />
 </video>
