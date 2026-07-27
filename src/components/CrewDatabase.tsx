@@ -160,7 +160,7 @@ transform: `translateZ(${-START_Z - index * SPACING}px)`,
         />
         <p
           ref={(el) => refs.text(0, el)}
-          className="font-mono text-[11px] tracking-[0.5em] text-cyan-200"
+          className="font-mono text-[11px] tracking-[0.5em] text-cyan-500"
           style={{ opacity: 0, willChange: 'transform, opacity' }}
         >
           {member.file}
