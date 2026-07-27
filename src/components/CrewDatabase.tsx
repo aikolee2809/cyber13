@@ -50,6 +50,25 @@ const REVEAL_START = 1900;           // text begins revealing this far before ca
 const P_CAMERA = 0.8;               // camera reaches David at this progress
 const DAVID_DWELL = 0.1;            // David's reveal window after reaching camera
 
+// Reveal throttling: revealText is only re-run when the reveal parameter f
+// changes by at least this much. Below this, text opacity/transform deltas
+// are sub-pixel and invisible.
+const REVEAL_THRESHOLD = 0.003;
+
+// Per-scene DOM write cache. Tracks the last value written for each property
+// so we can skip style mutations that would not change anything.
+interface SceneCache {
+  transform: string;
+  opacity: string;
+  bgOpacity: string;
+  revealF: number;       // last f fed to revealText (NaN = never)
+  textOpacity: string[]; // per-slot last opacity
+  textTransform: string[]; // per-slot last transform
+}
+function makeCache(): SceneCache {
+  return { transform: '', opacity: '', bgOpacity: '', revealF: NaN, textOpacity: [], textTransform: [] };
+}
+
 /* ═══════════════════════════════════════════════════════════════════
    HELPERS
    ═══════════════════════════════════════════════════════════════════ */
@@ -259,7 +278,14 @@ transform: `translateZ(${-START_Z - index * SPACING}px)`,
 // into the final text, like an encrypted record decrypting. Fires once per
 // element, never replays while the record stays visible.
 const SCRAMBLE_CHARS = '#@%/_=01*<>$';
+
+// Tracks the in-flight decode RAF per element so we never accidentally run
+// two decode loops on the same element (the dataset.decoded guard in
+// revealText already prevents this, but the WeakMap is a hard guarantee).
+const decodeRafs = new WeakMap<HTMLElement, number>();
 function startDecode(el: HTMLElement) {
+  const prev = decodeRafs.get(el);
+  if (prev) cancelAnimationFrame(prev);
   const finalText = el.textContent ?? '';
   if (!finalText) return;
   const len = finalText.length;
@@ -269,6 +295,7 @@ function startDecode(el: HTMLElement) {
     const t = (now - start) / duration;
     if (t >= 1) {
       el.textContent = finalText;
+      decodeRafs.delete(el);
       return;
     }
     const resolved = Math.floor(t * len);
@@ -279,9 +306,9 @@ function startDecode(el: HTMLElement) {
       else out += SCRAMBLE_CHARS[(Math.random() * SCRAMBLE_CHARS.length) | 0];
     }
     el.textContent = out;
-    requestAnimationFrame(step);
+    decodeRafs.set(el, requestAnimationFrame(step));
   };
-  requestAnimationFrame(step);
+  decodeRafs.set(el, requestAnimationFrame(step));
 }
 
 // Hover-triggered synchronized glitch: the whole crew record (card, image,
@@ -289,6 +316,8 @@ function startDecode(el: HTMLElement) {
 // random futuristic characters. ~780–900ms. Cannot retrigger while playing;
 // replays on every fresh mouseenter. Preserves original letter casing.
 const HOVER_DECODE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&@!?+=<>[]{}/*';
+// Same pattern as decodeRafs — guarantees one glitch RAF per name element.
+const glitchRafs = new WeakMap<HTMLElement, number>();
 function triggerCrewGlitch(sceneEl: HTMLElement, nameEl: HTMLElement) {
   if (nameEl.dataset.decoding === '1') return;
   nameEl.dataset.decoding = '1';
@@ -316,6 +345,7 @@ function triggerCrewGlitch(sceneEl: HTMLElement, nameEl: HTMLElement) {
       sceneEl.classList.remove('crew-glitch');
       nameEl.classList.remove('crew-decoding');
       nameEl.classList.add('crew-fadeout');
+      glitchRafs.delete(nameEl);
       window.setTimeout(() => {
         nameEl.classList.remove('crew-fadeout');
         nameEl.dataset.decoding = '';
@@ -341,22 +371,30 @@ function triggerCrewGlitch(sceneEl: HTMLElement, nameEl: HTMLElement) {
       }
     }
     nameEl.textContent = out;
-    requestAnimationFrame(step);
+    glitchRafs.set(nameEl, requestAnimationFrame(step));
   };
-  requestAnimationFrame(step);
+  glitchRafs.set(nameEl, requestAnimationFrame(step));
 }
 
 // Progressive text reveal: FILE → CODENAME → NAME (timing unchanged).
 // Slots 0–2 are the decoded labels; slot 3 (metadata + divider) rides the
 // codename's timing, slot 4 (status LED) rides the FILE label's timing.
-function revealText(els: (HTMLElement | null)[], f: number) {
+function revealText(els: (HTMLElement | null)[], f: number, cache: SceneCache) {
   const fe = easeInOutCubic(clamp01(f));
   for (let j = 0; j < 3; j++) {
     const el = els[j];
     if (!el) continue;
     const op = clamp01((fe - j * 0.33) / 0.33);
-    el.style.opacity = String(op);
-    el.style.transform = `translateY(${(1 - op) * 12}px)`;
+    const opStr = String(op);
+    if (opStr !== cache.textOpacity[j]) {
+      el.style.opacity = opStr;
+      cache.textOpacity[j] = opStr;
+    }
+    const tf = `translateY(${(1 - op) * 12}px)`;
+    if (tf !== cache.textTransform[j]) {
+      el.style.transform = tf;
+      cache.textTransform[j] = tf;
+    }
     if (op > 0.04 && !el.dataset.decoded) {
       el.dataset.decoded = '1';
       startDecode(el);
@@ -365,12 +403,24 @@ function revealText(els: (HTMLElement | null)[], f: number) {
   const meta = els[3];
   if (meta) {
     const op = clamp01((fe - 0.33) / 0.33);
-    meta.style.opacity = String(op);
-    meta.style.transform = `translateY(${(1 - op) * 12}px)`;
+    const opStr = String(op);
+    if (opStr !== cache.textOpacity[3]) {
+      meta.style.opacity = opStr;
+      cache.textOpacity[3] = opStr;
+    }
+    const tf = `translateY(${(1 - op) * 12}px)`;
+    if (tf !== cache.textTransform[3]) {
+      meta.style.transform = tf;
+      cache.textTransform[3] = tf;
+    }
   }
   const led = els[4];
   if (led) {
-    led.style.opacity = String(clamp01(fe));
+    const opStr = String(clamp01(fe));
+    if (opStr !== cache.textOpacity[4]) {
+      led.style.opacity = opStr;
+      cache.textOpacity[4] = opStr;
+    }
   }
 }
 
@@ -380,6 +430,8 @@ function useCrewEngine(
   bgRefs: React.RefObject<(HTMLDivElement | null)[]>,
   textRefs: React.RefObject<(HTMLElement | null)[][]>,
 ) {
+  const cacheRef = useRef<(SceneCache | null)[]>([]);
+
   // The camera target is driven by ScrollTrigger progress (which Lenis feeds).
   // The controller eases toward that target with momentum — a tiny cinematic
   // glide after the wheel stops, no overshoot, no bounce.
@@ -390,31 +442,65 @@ function useCrewEngine(
       const scenes = sceneRefs.current;
       const bgs = bgRefs.current;
       const texts = textRefs.current;
+      const caches = cacheRef.current;
       if (!scenes || !bgs || !texts) return;
 
-      for (let i = 0; i < COUNT; i++) {
+      // Active-scene windowing: only update current ± 1. All other scenes are
+      // frozen at their last-written values (always opacity 0 when they left
+      // the window, so they stay invisible). This covers every scene whose
+      // depthOpacity is > 0, so visuals are identical.
+      const current = Math.round((offset - START_Z) / SPACING);
+      const lo = Math.max(0, current - 1);
+      const hi = Math.min(COUNT - 1, current + 1);
+
+      for (let i = lo; i <= hi; i++) {
         const scene = scenes[i];
         if (!scene) continue;
 
-    const z = -START_Z - i * SPACING + offset;
+        let cache = caches[i];
+        if (!cache) { cache = makeCache(); caches[i] = cache; }
+
+        const z = -START_Z - i * SPACING + offset;
         const op = depthOpacity(z);
 
-        // Only transform + opacity — no layout recalculation.
-        scene.style.transform = `translateZ(${z}px)`;
-        scene.style.opacity = String(op);
+        // Cached transform + opacity — only write when the value actually
+        // changes. No layout recalculation, just style mutation.
+        const tf = `translateZ(${z}px)`;
+        if (tf !== cache.transform) {
+          scene.style.transform = tf;
+          cache.transform = tf;
+        }
+        const opStr = String(op);
+        if (opStr !== cache.opacity) {
+          scene.style.opacity = opStr;
+          cache.opacity = opStr;
+        }
 
         const bg = bgs[i];
-        if (bg) bg.style.opacity = String(op * 0.55);
+        if (bg) {
+          const bgOpStr = String(op * 0.55);
+          if (bgOpStr !== cache.bgOpacity) {
+            bg.style.opacity = bgOpStr;
+            cache.bgOpacity = bgOpStr;
+          }
+        }
 
+        // Throttled reveal: skip revealText entirely when the reveal
+        // parameter hasn't moved enough to produce a visible change.
+        let f: number;
         if (i === DAVID_INDEX) {
           // David reveals only during the dwell (after reaching camera).
           // Progress is reconstructed from the realized camera offset so the
           // text reveal inherits the same physical momentum.
           const p = offset / CAMERA_TRAVEL;
-          revealText(texts[i] ?? [], (p - P_CAMERA) / DAVID_DWELL);
+          f = (p - P_CAMERA) / DAVID_DWELL;
         } else {
           // Others reveal as they approach the camera.
-          revealText(texts[i] ?? [], (z + REVEAL_START) / REVEAL_START);
+          f = (z + REVEAL_START) / REVEAL_START;
+        }
+        if (Math.abs(f - cache.revealF) >= REVEAL_THRESHOLD) {
+          cache.revealF = f;
+          revealText(texts[i] ?? [], f, cache);
         }
       }
     },
