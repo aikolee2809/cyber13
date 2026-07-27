@@ -44,7 +44,7 @@ const CAMERA_TRAVEL = COUNT * SPACING; // 7000 — full camera travel
 const FADE_IN = 1800;                // begins fading in this far before camera
 const HOLD = 200;                   // fully visible band around camera
 const FADE_OUT = 1400;               // fades out this far past camera
-const REVEAL_START = 1000;           // text begins revealing this far before camera
+const REVEAL_START = 1800;           // text begins revealing this far before camera
 
 // Scroll progress mapping
 const P_CAMERA = 0.9;               // camera reaches David at this progress
