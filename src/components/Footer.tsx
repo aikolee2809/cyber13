@@ -1,5 +1,4 @@
 import { Twitter, MessageCircle, Send, Github, Zap } from 'lucide-react';
-import { IMAGES } from '@/lib/images';
 
 const SOCIALS = [
   { icon: Twitter, label: 'X / TWITTER', href: '#' },
@@ -8,14 +7,24 @@ const SOCIALS = [
   { icon: Github, label: 'GITHUB', href: '#' },
 ];
 
+const FOOTER_BG = 'https://ik.imagekit.io/zznoau6lx/6a1517ff337bf3da3718055203b67a40.jpg';
+
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-cyber-cyan/20 bg-cyber-darker px-5 py-16">
-      {/* Background imagery */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <img src={IMAGES.footerBg} alt="" className="h-full w-full object-cover img-cyber opacity-20" loading="lazy" />
-        <div className="absolute inset-0 bg-gradient-to-b from-cyber-darker/80 via-cyber-darker/60 to-cyber-darker" />
-      </div>
+    <footer
+      className="sticky bottom-0 overflow-hidden px-5 py-16"
+      style={{
+        backgroundColor: '#050507',
+        backgroundImage: `url(${FOOTER_BG})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        zIndex: -1,
+      }}
+    >
+      {/* Dark overlay — keeps text perfectly readable while the image stays cinematic */}
+      <div className="pointer-events-none absolute inset-0 -z-10" style={{ backgroundColor: 'rgba(5, 5, 7, 0.72)' }} />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-cyber-darker/60 via-transparent to-cyber-darker" />
       <div className="mx-auto max-w-5xl">
         {/* CTA */}
         <div className="reveal-glitch mb-12 text-center">

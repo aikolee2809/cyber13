@@ -26,7 +26,13 @@ export default function App() {
       <Background />
       <CursorGlow />
       <Navbar />
-      <main>
+      {/*
+        Opaque <main> sits in normal flow above the sticky footer (which uses
+        z-index: -1). As the user scrolls to the end of the FAQ section, main's
+        opaque background slides up and the footer is revealed from underneath —
+        driven purely by natural scroll, no JavaScript.
+      */}
+      <main className="relative z-0 bg-cyber-darker">
         <Hero />
         <Ticker />
         <div className="mx-auto max-w-6xl px-5 py-8">
