@@ -48,7 +48,7 @@ const REVEAL_START = 1900;           // text begins revealing this far before ca
 
 // Scroll progress mapping
 const P_CAMERA = 0.8;               // camera reaches David at this progress
-const DAVID_DWELL = 0.12;            // David's reveal window after reaching camera
+const DAVID_DWELL = 0.2;            // David's reveal window after reaching camera
 
 /* ═══════════════════════════════════════════════════════════════════
    HELPERS
