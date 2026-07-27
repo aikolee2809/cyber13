@@ -124,7 +124,7 @@ export default function About() {
         </div>
 
         {/* Manifesto blocks */}
-        <div className="mt-17 grid gap-12 sm:grid-cols-3 sm:gap-8">
+        <div className="mt-20 grid gap-12 sm:grid-cols-3 sm:gap-8">
           {MANIFESTO.map((m, i) => (
             <div
               key={i}
