@@ -187,9 +187,15 @@ transform: `translateZ(${-START_Z - index * SPACING}px)`,
 >
   {member.meta[0]}
 </span>
-        <span className="crew-cursor mt-1 font-mono text-[9px] tracking-[0.3em] text-gray-600">
-          {member.meta[1]}
-        </span>
+        <span
+  className="crew-cursor mt-1 font-mono text-[9px] tracking-[0.3em]"
+  style={{
+    color: '#FFE86A',
+    textShadow: '0 0 5px rgba(255,230,0,.35)',
+  }}
+>
+  {member.meta[1]}
+</span>
         <div className="crew-divider mt-4 w-32" />
       </div>
       <h3
