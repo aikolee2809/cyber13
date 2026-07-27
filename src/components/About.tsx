@@ -48,7 +48,7 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative overflow-hidden bg-cyber-darker px-6 pt-32 pb-16 sm:pt-40 sm:pb-12"
+      className="relative overflow-hidden bg-cyber-darker px-6 py-32 sm:py-40"
     >
       {/* faint horizon glow */}
       <div className="pointer-events-none absolute inset-0 -z-10">
@@ -103,21 +103,13 @@ export default function About() {
               className="relative aspect-[3/4] overflow-hidden"
               style={{ transform: `translateY(${offset}px)` }}
             >
-              <video
-  autoPlay
-  muted
-  loop
-  playsInline
-  className="h-full w-full object-cover"
-  style={{
-    filter: 'contrast(1.1) saturate(1.15) brightness(0.78)',
-  }}
->
-  <source
-    src="https://cdn-cf-east.streamable.com/video/mp4/jb3r6e.mp4?Expires=1785388763969&Key-Pair-Id=APKAIEYUVEN4EVB2OKEQ&Signature=kmjkNM8bYAwUIsNDD91HwOJm21irUplCaHg6At6S5EwQYVQTODz1jegZBiH2EseLMUSlGq-HYbGisJVfauPYwT3NudfMFXv6YoXo4gIvwrg~AJ9vCOLtuitjpeqZC2FIwvU0sReen8OuC8Zs5YTwyx4Obtad92jXQcXoTgbF5P5Sl2Q0dcXATVjOBNcDn4njjgCdLPSo2rkb9xmD83SdqRh7ngMcJJwN4nQyemSd7gais1BiJYHmERehCgpQMNcY28IYvrgtVbJLoZPdC-nrpQQYoSVk2eg2iGG7qke17NgrrCztbsN6iOGh4j0E5SOc4t7k9o6bDQDgqYxSrND~Rg__"
-    type="video/mp4"
-  />
-</video>
+              <img
+                src={IMAGES.aboutPortrait}
+                alt="A resident of Night City bathed in neon"
+                className="h-full w-full object-cover"
+                style={{ filter: 'contrast(1.1) saturate(1.15) brightness(0.78)' }}
+                loading="lazy"
+              />
               {/* cinematic grade */}
               <div className="absolute inset-0 bg-gradient-to-t from-cyber-darker via-transparent to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-r from-cyber-darker/40 via-transparent to-cyber-magenta/10" />
@@ -132,7 +124,7 @@ export default function About() {
         </div>
 
         {/* Manifesto blocks */}
-        <div className="mt-20 grid gap-12 sm:grid-cols-3 sm:gap-8">
+        <div className="mt-32 grid gap-12 sm:grid-cols-3 sm:gap-8">
           {MANIFESTO.map((m, i) => (
             <div
               key={i}

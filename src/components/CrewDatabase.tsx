@@ -35,7 +35,7 @@ const DAVID_INDEX = COUNT - 1;      // 6
 /* ═══════════════════════════════════════════════════════════════════
    DEPTH SYSTEM — evenly spaced translateZ, real perspective
    ═══════════════════════════════════════════════════════════════════ */
-const START_Z = 700;                 // NEW
+
 const SPACING = 1500;               // px between characters (translateZ)
 const PERSPECTIVE = 1000;           // parent perspective px
 const CAMERA_TRAVEL = COUNT * SPACING; // 7000 — full camera travel
@@ -122,7 +122,7 @@ function CrewScene({ member, index, refs }: { member: CrewMember; index: number;
     width: '100%',
     height: '100%',
     transformStyle: 'preserve-3d',
-     transform: `translateZ(${-START_Z - index * SPACING}px)`,
+    transform: `translateZ(${-(index + 1) * SPACING}px)`,
     opacity: 0,
     pointerEvents: 'none',
     willChange: 'transform, opacity',
@@ -382,7 +382,7 @@ function useCrewEngine(
         const scene = scenes[i];
         if (!scene) continue;
 
-      const z = -START_Z - i * SPACING + offset;
+        const z = -(i + 1) * SPACING + offset;
         const op = depthOpacity(z);
 
         // Only transform + opacity — no layout recalculation.
