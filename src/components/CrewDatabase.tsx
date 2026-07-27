@@ -122,7 +122,7 @@ function CrewScene({ member, index, refs }: { member: CrewMember; index: number;
     width: '100%',
     height: '100%',
     transformStyle: 'preserve-3d',
-    transform: `translateZ(${-(index + 1) * SPACING}px)`,
+transform: `translateZ(${-START_Z - index * SPACING}px)`,
     opacity: 0,
     pointerEvents: 'none',
     willChange: 'transform, opacity',
