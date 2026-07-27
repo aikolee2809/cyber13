@@ -47,7 +47,7 @@ const FADE_OUT = 1400;               // fades out this far past camera
 const REVEAL_START = 1900;           // text begins revealing this far before camera
 
 // Scroll progress mapping
-const P_CAMERA = 0.9;               // camera reaches David at this progress
+const P_CAMERA = 0.7;               // camera reaches David at this progress
 const DAVID_DWELL = 0.1;            // David's reveal window after reaching camera
 
 /* ═══════════════════════════════════════════════════════════════════
