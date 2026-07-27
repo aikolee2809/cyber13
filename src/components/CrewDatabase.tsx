@@ -41,7 +41,7 @@ const PERSPECTIVE = 1000;           // parent perspective px
 const CAMERA_TRAVEL = COUNT * SPACING; // 7000 — full camera travel
 
 // Visibility windows measured in rendered-z (px from camera)
-const FADE_IN = 1800;                // begins fading in this far before camera
+const FADE_IN = 1000;                // begins fading in this far before camera
 const HOLD = 200;                   // fully visible band around camera
 const FADE_OUT = 1400;               // fades out this far past camera
 const REVEAL_START = 1000;           // text begins revealing this far before camera
