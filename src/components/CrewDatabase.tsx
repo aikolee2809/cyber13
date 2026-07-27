@@ -178,9 +178,15 @@ transform: `translateZ(${-START_Z - index * SPACING}px)`,
         className={`mt-3 flex flex-col ${align}`}
         style={{ opacity: 0, willChange: 'transform, opacity' }}
       >
-        <span className="font-mono text-[9px] tracking-[0.3em] text-gray-600">
-          {member.meta[0]}
-        </span>
+        <<span
+  className="font-mono text-[9px] tracking-[0.3em]"
+  style={{
+    color: '#D7F9FF',
+    textShadow: '0 0 4px rgba(0,240,255,.35)',
+  }}
+>
+  {member.meta[0]}
+</span>
         <span className="crew-cursor mt-1 font-mono text-[9px] tracking-[0.3em] text-gray-600">
           {member.meta[1]}
         </span>
