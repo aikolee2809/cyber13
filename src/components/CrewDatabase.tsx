@@ -458,7 +458,7 @@ export default function CrewDatabase() {
                 style={{ opacity: 0 }}
               >
                 <img src={m.img} alt="" className="h-full w-full object-cover" loading="lazy" />
-                <div className="absolute inset-0 bg-[#050507]/70" />
+                <div className="absolute inset-0 bg-[#050507]/65" />
               </div>
             ))}
           </div>
