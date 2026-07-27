@@ -104,7 +104,7 @@ export default function About() {
               style={{ transform: `translateY(${offset}px)` }}
             >
               <img
-                src={IMAGES.aboutPortrait}
+                src={https://ik.imagekit.io/zznoau6lx/ki34g7cl98ca1.jpg}
                 alt="A resident of Night City bathed in neon"
                 className="h-full w-full object-cover"
                 style={{ filter: 'contrast(1.1) saturate(1.15) brightness(0.78)' }}
