@@ -652,14 +652,18 @@ function CrewFXStyles() {
   70% { filter: drop-shadow(0.5px 0 rgba(255,0,60,0.15)) drop-shadow(-0.5px 0 rgba(0,240,255,0.15)); }
   85% { filter: none; }
 }
+/* Không rung card */
 .crew-glitch .crew-card {
-  animation: crewCardShake 0.85s ease-out forwards;
 }
+
+/* Giữ RGB glitch của ảnh */
 .crew-glitch .crew-card-well {
   animation: crewWellGlitch 0.85s ease-out forwards;
 }
+
+/* Chỉ giữ gradient chạy */
 .crew-glitch .crew-name {
-  animation: crewNameFlow 16s linear infinite, crewNameShake 0.85s ease-out forwards;
+  animation: crewNameFlow 16s linear infinite;
 }
 .crew-divider {
   position: relative;
